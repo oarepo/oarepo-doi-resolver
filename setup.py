@@ -10,11 +10,13 @@ OAREPO_VERSION = os.environ.get('OAREPO_VERSION', '3.3.0')
 
 
 install_requires = [
-    'crossrefapi'
+    'crossrefapi',
+    'simplejson'
 ]
 
 tests_require = [
-    'crossrefapi'
+    'crossrefapi',
+    'elasticsearch==7.13.4'
 ]
 
 extras_require = {
@@ -44,7 +46,7 @@ setup(
     license="MIT",
     author="Alzbeta Pokorna",
     author_email="alzbeta.pokorna@cesnet.cz",
-    description="DCTerms support for OARepo (just selected props)",
+    description="DOI resolver for OARepo",
     long_description=readme + '\n\n' + history,
     long_description_content_type='text/markdown',
     zip_safe=False,

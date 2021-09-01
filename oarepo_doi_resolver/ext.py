@@ -2,6 +2,8 @@ import requests
 from crossref.restful import Works
 from flask import Blueprint
 from invenio_base.signals import app_loaded
+from simplejson import JSONDecodeError
+
 
 class CrossRefClient(object):
     """Class for CrossRefClient."""
@@ -57,9 +59,13 @@ def resolve_doi(**kwargs):
     first_part = kwargs['first_part']
     second_part = kwargs['second_part']
     doi = first_part + '/' + second_part
-    metadata = getMetadataFromDOI(doi)
+    try:
+        metadata = getMetadataFromDOI(doi)
+        response = metadata
+    except JSONDecodeError as e:
+        response = {'error': 'doi not found'}
 
-    return metadata
+    return response
 
 def resolve_doi_ext(sender, app=None, **kwargs):
     with app.app_context():

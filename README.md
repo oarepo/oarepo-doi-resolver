@@ -14,11 +14,11 @@ Instalation
 ```
 
 
-  [image]: https://img.shields.io/github/license/oarepo/oarepo-health-check.svg
-  [1]: https://github.com/oarepo/oarepo-health-check/blob/master/LICENSE
-  [2]: https://img.shields.io/travis/oarepo/oarepo-health-check.svg
-  [3]: https://travis-ci.org/oarepo/oarepo-health-check
-  [4]: https://img.shields.io/coveralls/oarepo/oarepo-health-check.svg
-  [5]: https://coveralls.io/r/oarepo/oarepo-health-check
-  [6]: https://img.shields.io/pypi/v/oarepo-health-check.svg
-  [7]: https://pypi.org/pypi/oarepo-health-check
+  [image]: https://img.shields.io/github/license/oarepo/oarepo-doi-resolver.svg
+  [1]: https://github.com/oarepo/oarepo-doi-resolver/blob/master/LICENSE
+  [2]: https://img.shields.io/travis/oarepo/oarepo-doi-resolver.svg
+  [3]: https://travis-ci.org/oarepo/oarepo-doi-resolver
+  [4]: https://img.shields.io/coveralls/oarepo/oarepo-doi-resolver.svg
+  [5]: https://coveralls.io/r/oarepo/oarepo-doi-resolver
+  [6]: https://img.shields.io/pypi/v/oarepo-doi-resolver.svg
+  [7]: https://pypi.org/pypi/oarepo-doi-resolver
