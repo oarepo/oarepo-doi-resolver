@@ -2,32 +2,25 @@
 """Setup module for flask taxonomy."""
 import os
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 readme = open('README.md').read()
 history = open('CHANGES.md').read()
-OAREPO_VERSION = os.environ.get('OAREPO_VERSION', '3.3.0')
-
 
 install_requires = [
-    'crossrefapi',
-    'simplejson'
 ]
 
 tests_require = [
-    'crossrefapi',
-    'elasticsearch==7.13.4'
+    'oarepo-validate'
 ]
 
 extras_require = {
     'tests': [
         *tests_require,
-        'oarepo[tests]~={version}'.format(
-            version=OAREPO_VERSION)],
-    'tests-es7': [
-        *tests_require,
-        'oarepo[tests-es7]~={version}'.format(
-            version=OAREPO_VERSION)],
+        'oarepo[tests]'],
+    'build': [
+        'oarepo-model-builder'
+    ]
 }
 
 setup_requires = [
