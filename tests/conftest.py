@@ -22,12 +22,9 @@ from invenio_pidstore import InvenioPIDStore
 from invenio_records import InvenioRecords
 from invenio_records_rest import InvenioRecordsREST
 from invenio_records_rest.utils import PIDConverter, allow_all
-from invenio_records_rest.views import create_blueprint_from_app, need_record_permission
+from invenio_records_rest.views import create_blueprint_from_app
 from invenio_rest import InvenioREST
 from invenio_search import InvenioSearch
-from invenio_search.cli import destroy, init
-from oarepo_mapping_includes.ext import OARepoMappingIncludesExt
-from oarepo_validate.ext import OARepoValidate
 from sqlalchemy_utils import create_database, database_exists
 
 from oarepo_actions.ext import Actions
@@ -93,12 +90,10 @@ def app(base_app):
     InvenioPIDStore(base_app)
     base_app.url_map.converters['pid'] = PIDConverter
     OARepoDOIResolver(base_app)
-    OARepoMappingIncludesExt(base_app)
     LoginManager(base_app)
     Permission(base_app)
     InvenioAccess(base_app)
     Principal(base_app)
-    OARepoValidate(base_app)
     Actions(base_app)
     base_app.register_blueprint(invenio_records_rest.views.create_blueprint_from_app(base_app))
     login_manager = LoginManager()
