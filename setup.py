@@ -8,10 +8,12 @@ readme = open('README.md').read()
 history = open('CHANGES.md').read()
 
 install_requires = [
+    'crossrefapi'
 ]
 
 tests_require = [
-    'oarepo-validate'
+    'oarepo-validate',
+    'crossrefapi'
 ]
 
 extras_require = {
