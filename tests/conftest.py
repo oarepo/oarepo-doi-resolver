@@ -27,7 +27,6 @@ from invenio_rest import InvenioREST
 from invenio_search import InvenioSearch
 from sqlalchemy_utils import create_database, database_exists
 
-from oarepo_actions.ext import Actions
 
 from oarepo_doi_resolver import OARepoDOIResolver
 
@@ -38,6 +37,7 @@ def set_identity(u):
     identity.provides.add(authenticated_user)
     identity_changed.send(current_app._get_current_object(), identity=identity)
     assert flask.g.identity.id == u.id
+
 
 @pytest.fixture()
 def base_app():
@@ -67,7 +67,7 @@ def base_app():
         JSONSCHEMAS_HOST='localhost:5000',
         SEARCH_ELASTIC_HOSTS=os.environ.get('SEARCH_ELASTIC_HOSTS', None),
         PIDSTORE_RECID_FIELD='InvenioID',
-        FILES_REST_PERMISSION_FACTORY = allow_all
+        FILES_REST_PERMISSION_FACTORY=allow_all
     )
 
     InvenioDB(app_)
@@ -94,12 +94,10 @@ def app(base_app):
     Permission(base_app)
     InvenioAccess(base_app)
     Principal(base_app)
-    Actions(base_app)
     base_app.register_blueprint(invenio_records_rest.views.create_blueprint_from_app(base_app))
     login_manager = LoginManager()
     login_manager.init_app(base_app)
     login_manager.login_view = 'login'
-
 
     @login_manager.user_loader
     def basic_user_loader(user_id):
@@ -119,8 +117,6 @@ def app(base_app):
 
     with base_app.app_context():
         yield base_app
-
-
 
 
 @pytest.yield_fixture()
@@ -144,7 +140,6 @@ def db(app):
     # Explicitly close DB connection
     _db.session.close()
     _db.drop_all()
-
 
 # @pytest.fixture()
 # def prepare_es(app, db):
