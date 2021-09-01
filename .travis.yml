@@ -1,0 +1,55 @@
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2019 CESNET.
+#
+# Invenio OpenID Connect is free software; you can redistribute it and/or modify it
+# under the terms of the MIT License; see LICENSE file for more details.
+
+notifications:
+  email: false
+
+sudo: false
+
+language: python
+
+matrix:
+  fast_finish: true
+
+cache:
+  - pip
+
+env:
+  matrix:
+    - REQUIREMENTS=release EXTRAS=tests
+
+python:
+  - "3.8"
+
+before_install:
+  - "travis_retry pip install --upgrade pip setuptools py"
+  - "travis_retry pip install twine wheel coveralls requirements-builder pip-tools"
+  - "requirements-builder -e $EXTRAS --level=pypi setup.py > .travis-release-requirements.in"
+  - "pip-compile -U --verbose -o .travis-release-requirements.txt .travis-release-requirements.in"
+  - cat .travis-release-requirements.txt
+
+install:
+  - "travis_retry pip install -r .travis-${REQUIREMENTS}-requirements.txt"
+  - "travis_retry pip install -e .[$EXTRAS]"
+  - "travis_retry pip install -e tests"
+
+script:
+  - "./run-tests.sh"
+
+after_success:
+  - coveralls
+
+deploy:
+  provider: pypi
+  user: "__token__"
+  password:
+    secure: "YQQlDdPAqzfZWsLrSUSlGl0skAy4dwf6hvV4dkp4X1YqepD3Or7pgoqVQm64Aybg9yLltMPlzcNBC7ceER4DYaBazxCA7ckYKM+yjo5pwY6f8RiKjFJBqPxn8pzPxVsh5LcN8FnFGDdGbJERxoqtVEWp3dALFrOgbeeX7Q90WSFoLXx0E4kKyj25tS6dlqlvNIUPxYuG2RKQhqaFO+BRBtV7R1eEyl21jz7e7rPWbbP2fYgAPnG3jWW6YiV0MXosHqjtUgYN7fURvhwc4tGADDpW/bmS6sM1Ck1fZnQQX/EiyXKuQ61d2+yQ9MBOgQtLv9dwbpkZAzQQ8JQxXtM2/NHfpsKlzud69fbwonFZYljsDje5qfghgLqRlKkA2QNXiXlvcIySDWOYH6tNt2LeT0K5nSe7hOAScEU+rJDcUAOLpKuvL+ZfOM6kUu23kLoUoCQC3k478k1PUAtwMtdiBN2EMl1K90exVDALJw7bsDSs9stpqpmJAWr4eEa3DclXDS0j8bgyxdpzTucw7zF8yxygrjku+tDlLGJNI2h1BtLnhY++6m3kMZWbJoQbUVDIQg6jdgNBKT46rU75ouM/U4WAKevitiMZ+atNf534sMusbmuGGLvhasA8L6I/3iNd/NhDWFWg1uywjZYHwBAltm1onc9Is4plUiNmdC+c3Qg="
+  on:
+    tags: true
+    branch: master
+  distributions: "sdist bdist_wheel"
+  skip_existing: true
