@@ -48,10 +48,10 @@ setup(
     packages=['oarepo_doi_resolver'],
     entry_points={
         'invenio_base.apps': [
-            'oarepo_doi_resolver = oarepo_doi_resolver:OARepoHealthCheck'
+            'oarepo_doi_resolver = oarepo_doi_resolver:OARepoDOIResolver'
         ],
         'invenio_base.api_apps': [
-            'oarepo_doi_resolver = oarepo_doi_resolver:OARepoHealthCheck'
+            'oarepo_doi_resolver = oarepo_doi_resolver:OARepoDOIResolver'
         ]
     },
     include_package_data=True,
