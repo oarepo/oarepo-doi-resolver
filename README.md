@@ -1,5 +1,6 @@
 OARepo DOI resolver
 ====================
+OArepo module that returns records metadata from its public DOI.
 
 [![image][]][1]
 [![image][2]][3]
@@ -12,6 +13,15 @@ Instalation
 ```bash
     pip install oarepo_doi_resolver
 ```
+
+Usage
+-----
+Module provides entrypoint for DOI resolving on url ```/resolve-doi/<doi>```
+##### example
+```https://127.0.0.1:5000/resolve-doi/10.5281/zenodo.5347031```
+
+Entrypoint is reachable only for authenticated users. 
+
 
 
   [image]: https://img.shields.io/github/license/oarepo/oarepo-doi-resolver.svg

@@ -1,6 +1,6 @@
 import requests
 from crossref.restful import Works
-from flask import Blueprint
+from flask import Blueprint, abort
 from invenio_base.signals import app_loaded
 from simplejson import JSONDecodeError
 
@@ -56,16 +56,23 @@ def getMetadataFromDOI(id):
     return metadata
 
 def resolve_doi(**kwargs):
+    from flask_login import current_user
+    if not current_user.is_authenticated:
+        abort(401)
     first_part = kwargs['first_part']
     second_part = kwargs['second_part']
     doi = first_part + '/' + second_part
+
     try:
         metadata = getMetadataFromDOI(doi)
-        response = metadata
-    except JSONDecodeError as e:
-        response = {'error': 'doi not found'}
+    except JSONDecodeError:
+        abort(404)
+    except:
+        abort(500)
 
-    return response
+    return metadata
+
+
 
 def resolve_doi_ext(sender, app=None, **kwargs):
     with app.app_context():
