@@ -9,12 +9,14 @@ history = open('CHANGES.md').read()
 
 install_requires = [
     'crossrefapi',
-    'langdetect'
+    'langdetect',
+    'deepmerge'
 ]
 
 tests_require = [
     'oarepo-validate',
-    'crossrefapi'
+    'crossrefapi',
+    'deepmerge'
 ]
 
 extras_require = {
