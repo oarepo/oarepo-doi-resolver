@@ -8,7 +8,8 @@ readme = open('README.md').read()
 history = open('CHANGES.md').read()
 
 install_requires = [
-    'crossrefapi'
+    'crossrefapi',
+    'langdetect'
 ]
 
 tests_require = [
