@@ -19,22 +19,14 @@ def schema_mapping(existing_record, doi):
 
 
     #itemCreators -required
-    authors_array = try_name(nlist=['authors', 'author', 'contributor', 'contributors'], record=existing_record)
+    authors_array = try_name(nlist=['authors', 'author'], record=existing_record)
     if authors_array == None:
-        always_merger.merge(data, {'authors': [{"full_name": "Various authors"}]}) #default
+        always_merger.merge(data, {'itemCreators': [{"full_name": "Various authors"}]}) #default
     else:
         if(type(authors_array) is list):
             authors_data = []
             for author in authors_array:
                 auth_data = {}
-                if 'ORCID' in author:
-                    always_merger.merge(auth_data, {"identifiers": [{"scheme": "ORCID", "value": author["ORCID"]}]})
-                if 'alternative_names' in author and type(author['alternative_names']) is list:
-                    always_merger.merge(auth_data, {"alternative_names": author['alternative_names']})
-                if 'roles' in author and type(author['roles']) is list:
-                    always_merger.merge(auth_data, {"roles": author['roles']})
-                if 'type' in author and type(author['type']) is str:
-                    always_merger.merge(auth_data, {"type": author['type']})
                 #affiliation /affiliations
                 full_name = try_name(nlist=['full_name', 'name', 'fullname', 'literal'], record=author)
                 if full_name != None:
@@ -66,7 +58,7 @@ def schema_mapping(existing_record, doi):
     publication_year = try_name(nlist=['publication_year', 'issued'], record=existing_record)
 
     if publication_year != None and type(publication_year) is str and len(publication_year['data-part'][0]) == 4:
-        always_merger.merge(data, {'publication_year': publication_year})
+        always_merger.merge(data, {'itemYear': publication_year})
     elif publication_year != None and type(publication_year) is dict:
         if 'date-parts' in publication_year.keys():
             if len(str(publication_year['date-parts'][0][0])) == 4:
@@ -84,9 +76,9 @@ def schema_mapping(existing_record, doi):
         if type(title_value) is list:
             title_value= title_value[0]
         title =  title_value
-        always_merger.merge(data, {'title': title})
+        always_merger.merge(data, {'itemTitle': title})
     else:
-        always_merger.merge(data, {'title': "unknown"}) #default
+        always_merger.merge(data, {'itemTitle': "unknown"}) #default
 
     # urls
     urls = try_name(nlist=['url', 'urls', 'URL', 'URLs'], record=existing_record)
