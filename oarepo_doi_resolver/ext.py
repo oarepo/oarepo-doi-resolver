@@ -4,7 +4,7 @@ from flask import Blueprint, abort
 from invenio_base.signals import app_loaded
 from simplejson import JSONDecodeError
 
-from oarepo_doi_resolver.article_metadata_mapping import schema_mapping
+from oarepo_doi_resolver.relatedItems_metadata_mapping import schema_mapping
 
 
 class CrossRefClient(object):
