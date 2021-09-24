@@ -15,7 +15,7 @@ def schema_mapping(existing_record, doi):
     data = {}
 
     #itemPIDs -required
-    always_merger.merge(data, {"itemPIDs": [{"scheme": "DOI", "value": doi}]})
+    always_merger.merge(data, {"itemPIDs": [{"scheme": "DOI", "identifier": doi}]})
 
 
     #itemCreators -required
