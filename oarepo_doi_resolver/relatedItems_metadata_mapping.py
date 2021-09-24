@@ -80,10 +80,10 @@ def schema_mapping(existing_record, doi):
     else:
         always_merger.merge(data, {'itemTitle': "unknown"}) #default
 
-    # urls
-    urls = try_name(nlist=['url', 'urls', 'URL', 'URLs'], record=existing_record)
-    if urls != None and type(urls) is str:
-        always_merger.merge(data, {'itemURL': [{"value": urls}]})
+    # url
+    url = try_name(nlist=['url', 'urls', 'URL', 'URLs'], record=existing_record)
+    if url != None and type(url) is str:
+        always_merger.merge(data, {'itemURL': url})
 
 
     return data
