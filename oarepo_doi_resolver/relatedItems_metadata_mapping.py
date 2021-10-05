@@ -40,7 +40,7 @@ def schema_mapping(existing_record, doi):
                     authors_data.append(auth_data)
                     continue
                 else:
-                    full_name = given + " " + family
+                    full_name = family + ", " + given
                     always_merger.merge(auth_data, {"full_name": full_name})
                     authors_data.append(auth_data)
                     continue

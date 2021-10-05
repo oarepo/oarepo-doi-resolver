@@ -78,9 +78,8 @@ def resolve_article(**kwargs):
     from flask_login import current_user
     if not current_user.is_authenticated:
         abort(401)
-    first_part = kwargs['first_part']
-    second_part = kwargs['second_part']
-    doi = first_part + '/' + second_part
+
+    doi = kwargs['doi']
 
     try:
         metadata = getMetadataFromDOI(doi)
@@ -100,8 +99,7 @@ def resolve_doi_ext(sender, app=None, **kwargs):
         app.register_blueprint(resolve_doi_bp)
 
         resolve_article_bp = Blueprint("resolve_article", __name__, url_prefix=None, )
-        resolve_article_bp.add_url_rule(rule='/resolve-article/<string:first_part>/<string:second_part>', view_func=resolve_article,
-                                    methods=['GET'])
+        resolve_article_bp.add_url_rule(rule='/resolve-article/<path:doi>', view_func=resolve_article, methods=['GET'])
         app.register_blueprint(resolve_article_bp)
 
 
