@@ -1,6 +1,13 @@
 from deepmerge import always_merger
 from langdetect import detect, detect_langs
 
+def taxonomy_reference(code, term):
+    print('cenz')
+    return dict(
+        links=dict(
+            self=f'/api/2.0/taxonomies/{code}/{term}'
+        )
+    )
 
 def try_name(nlist,record, default=None):
     for name in nlist:
@@ -28,20 +35,20 @@ def schema_mapping(existing_record, doi):
             for author in authors_array:
                 auth_data = {'nameType': 'Personal'}
                 #affiliation /affiliations
-                full_name = try_name(nlist=['full_name', 'name', 'fullname', 'literal'], record=author)
+                full_name = try_name(nlist=['full_name', 'name', 'fullname', 'literal', "fullName"], record=author)
                 if full_name != None:
-                    always_merger.merge(auth_data, {"full_name": full_name})
+                    always_merger.merge(auth_data, {"fullName": full_name})
                     authors_data.append(auth_data)
                     continue
                 given = try_name(nlist=['given', 'first', 'first_name'], record=author)
                 family = try_name(nlist=['family', 'family_name', 'second_name'], record=author)
                 if(given == None or family == None):
-                    always_merger.merge(auth_data, {"full_name": "unknown"})
+                    always_merger.merge(auth_data, {"fullName": "unknown"})
                     authors_data.append(auth_data)
                     continue
                 else:
                     full_name = family + ", " + given
-                    always_merger.merge(auth_data, {"full_name": full_name})
+                    always_merger.merge(auth_data, {"fullName": full_name})
                     authors_data.append(auth_data)
                     continue
 
@@ -85,5 +92,7 @@ def schema_mapping(existing_record, doi):
     if url != None and type(url) is str:
         always_merger.merge(data, {'itemURL': url})
 
+    # itemRelationType
+    always_merger.merge(data, {'itemResourceType': taxonomy_reference('resourceType', 'article')})
 
     return data
