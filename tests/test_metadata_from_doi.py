@@ -8,6 +8,7 @@ TestUsers = namedtuple('TestUsers', ['u1', 'u2', 'u3', 'r1', 'r2'])
 
 def test_response(app, db, client):
     """Returns named tuple (u1, u2, u3, r1, r2)."""
+    print('test')
     with db.session.begin_nested():
         r1 = Role(name='role1')
         r2 = Role(name='role2')
@@ -30,7 +31,7 @@ def test_response(app, db, client):
     response = client.get(url)
     assert response.status_code == 200
 
-    response = client.get('/resolve-doi/10.5281/zenodo.5335900', content_type='application/json')  # authorized user
+    response = client.get('/resolve-article/10.5281/zenodo.5335900', content_type='application/json')  # authorized user
     assert response.status_code == 200
 
     response = client.get('/resolve-doi/xx/xx', content_type='application/json') #not existing DOI

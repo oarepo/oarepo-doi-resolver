@@ -21,12 +21,12 @@ def schema_mapping(existing_record, doi):
     #itemCreators -required
     authors_array = try_name(nlist=['authors', 'author'], record=existing_record)
     if authors_array == None:
-        always_merger.merge(data, {'itemCreators': [{"full_name": "Various authors"}]}) #default
+        always_merger.merge(data, {'itemCreators': [{"full_name": "Various authors", "nameType": "Personal"}]}) #default
     else:
         if(type(authors_array) is list):
             authors_data = []
             for author in authors_array:
-                auth_data = {}
+                auth_data = {'nameType': 'Personal'}
                 #affiliation /affiliations
                 full_name = try_name(nlist=['full_name', 'name', 'fullname', 'literal'], record=author)
                 if full_name != None:
