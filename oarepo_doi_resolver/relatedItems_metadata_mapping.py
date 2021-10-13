@@ -92,7 +92,10 @@ def schema_mapping(existing_record, doi):
     if url != None and type(url) is str:
         always_merger.merge(data, {'itemURL': url})
 
-    # itemRelationType
+    # itemResourceType
     always_merger.merge(data, {'itemResourceType': taxonomy_reference('resourceType', 'article')})
+
+    # itemRelationType
+    always_merger.merge(data, {'itemRelationType': taxonomy_reference('itemRelationType', 'isReferencedBy')})
 
     return data
