@@ -8,7 +8,6 @@ TestUsers = namedtuple('TestUsers', ['u1', 'u2', 'u3', 'r1', 'r2'])
 
 def test_response(app, db, client):
     """Returns named tuple (u1, u2, u3, r1, r2)."""
-    print('test')
     with db.session.begin_nested():
         r1 = Role(name='role1')
         r2 = Role(name='role2')

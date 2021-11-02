@@ -2,7 +2,6 @@ from deepmerge import always_merger
 from langdetect import detect, detect_langs
 
 def taxonomy_reference(code, term):
-    print('cenz')
     return dict(
         links=dict(
             self=f'/api/2.0/taxonomies/{code}/{term}'
